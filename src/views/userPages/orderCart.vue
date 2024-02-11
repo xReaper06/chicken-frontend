@@ -94,6 +94,7 @@ const getMyProductCart = async()=>{
 }
 onMounted(()=>{ 
     getMyProductCart();
+    getMyInfo()
 });
 
 
@@ -165,6 +166,16 @@ const SelectIDs = (id,data,image, name, quant, price) => {
     });
   }
 };
+const getMyInfo = async()=>{
+    try {
+        const response = await AuthenticationService.getMyInfo()
+        if(response){
+            authStore.setUserInfo(response.data.myProfile) 
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <style scoped>

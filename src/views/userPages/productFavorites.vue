@@ -62,7 +62,18 @@ import addtoCartModal from '@/components/modal/addtoCartModal.vue';
 }
 onMounted(()=>{
     getAllFavorites();
+    getMyInfo()
 })
+const getMyInfo = async()=>{
+    try {
+        const response = await AuthenticationService.getMyInfo()
+        if(response){
+            authStore.setUserInfo(response.data.myProfile) 
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 const myProduct = ref([])
 const showModal =ref(false);
   const openModal = (product)=>{

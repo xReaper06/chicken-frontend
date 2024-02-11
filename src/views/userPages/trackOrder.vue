@@ -64,7 +64,18 @@ const trackMyorder = async()=>{
 }
 onMounted(()=>{
     trackMyorder();
+    getMyInfo()
 })
+const getMyInfo = async()=>{
+    try {
+        const response = await AuthenticationService.getMyInfo()
+        if(response){
+            authStore.setUserInfo(response.data.myProfile) 
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <style scoped>

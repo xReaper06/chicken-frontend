@@ -82,12 +82,12 @@
 <script setup>
 import AuthenticationService from '@/service/AuthenticationService';
 import { useAuthStore } from '@/store';
-import { watchEffect,ref,onMounted } from 'vue';
+import { watchEffect,ref } from 'vue';
 import router from '@/router'
 
 const isActive = (route) => router.currentRoute.value.path === route;
 const authStore = useAuthStore();
-const myInfo = ref([])
+let myInfo = ref([])
 const user = sessionStorage.getItem('user');
 let totalCart = ref(0)
 let trackingOrder = ref(0)
@@ -97,8 +97,10 @@ watchEffect(()=>{
     totalCart.value = authStore.totalCart
     trackingOrder.value = authStore.myOrders
     favorites.value = authStore.myFavorites
-    history = authStore.myHistory
+    history.value = authStore.myHistory
+    myInfo.value = authStore.userInfo
 })
+console.log(authStore.userInfo)
 
 const logout = async ()=>{
 try{  
@@ -111,22 +113,6 @@ try{
 }catch(err){
     console.error('Error Logout')
 }
-}
-onMounted(()=>{
-    if(user != null){
-        getMyInfo()
-    }
-})
-
-const getMyInfo = async()=>{
-    try {
-        const response = await AuthenticationService.getMyInfo()
-        if(response){
-            myInfo.value = response.data.myProfile
-        }
-    } catch (error) {
-        console.log(error);
-    }
 }
 
 </script>

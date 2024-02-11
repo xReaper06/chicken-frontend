@@ -158,6 +158,7 @@ const user_role = JSON.parse(user);
     trackMyorder();
     getAllFavorites();
     myOrderDelivered();
+    getMyInfo();
     if(user != null){
       switch (user_role.role) {
                     case 'admin':
@@ -214,6 +215,18 @@ try {
 } catch (error) {
     console.log(error);
 }
+}
+
+
+const getMyInfo = async()=>{
+    try {
+        const response = await AuthenticationService.getMyInfo()
+        if(response){
+            authStore.setUserInfo(response.data.myProfile) 
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
   </script>
   

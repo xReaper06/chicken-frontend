@@ -99,7 +99,9 @@
 
 <script setup>
 import {ref,onMounted,watchEffect,watch} from 'vue'
+import { useAuthStore } from '@/store';
 import AuthenticationService from '@/service/AuthenticationService';
+const authStore = useAuthStore();
 const personAddress = ref(false)
 const personInfo = ref(true)
 const personPass = ref(false)
@@ -235,6 +237,7 @@ const changeInfo = async ()=>{
         if(response){
             alert(response.data.msg);
             getAllInformation();
+            getMyInfo()
         }
     } catch (error) {
         console.log(error);
@@ -249,6 +252,7 @@ const changePass = async()=>{
         if(response){
             alert(response.data.msg)
             formdata.value.newPass = ''
+            getMyInfo()
         }
     } catch (error) {
         console.log(error);
@@ -267,6 +271,7 @@ const changeAddress = async()=>{
         if(response){
             alert(response.data.msg);
             getAllInformation();
+            getMyInfo()
         }
     } catch (error) {
         console.log(error);
@@ -280,10 +285,24 @@ const changeProfile = async()=>{
         const response = await AuthenticationService.changeProfilePic(data)
         if(response){
             alert(response.data.msg);
+            getMyInfo()
         }
     } catch (error) {
         console.log(error);
         alert(error.response.data.msg);
+    }
+}
+onMounted(()=>{
+    getMyInfo()
+})
+const getMyInfo = async()=>{
+    try {
+        const response = await AuthenticationService.getMyInfo()
+        if(response){
+            authStore.setUserInfo(response.data.myProfile) 
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 </script>

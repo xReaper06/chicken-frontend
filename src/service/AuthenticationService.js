@@ -25,6 +25,9 @@ export default{
     getUsersInfo(){
         return Api().get('/getUsersInfo')
     },
+    getMyInfo(){
+        return Api().get('/getMyInfo')
+    },
     addToCart(credentials){
         return Api().post('/addToCart',credentials);
     },
@@ -54,9 +57,6 @@ export default{
     },
     removeFromFavorites(credentials){
         return Api().post('/removeFromFavorites',credentials);
-    },
-    getMyInfo(){
-        return Api().get('/getMyInfo')
     },
     getAllItemsCheckedOut(){
         return Api().get('/getAllItemsCheckedOut')

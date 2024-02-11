@@ -10,6 +10,7 @@ export const useAuthStore = defineStore('auth', {
     myOrders:0,
     myFavorites:0,
     myHistory:0,
+    userInfo:[],
   }),
   getters: {
     isAuthenticated: (state) => !!state.accessToken,
@@ -23,6 +24,9 @@ export const useAuthStore = defineStore('auth', {
       this.refreshToken = refreshToken;
       sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('refreshToken', refreshToken);
+    },
+    setUserInfo(userInfo){
+      this.userInfo = userInfo
     },
     setTotalCart(totalCart){
       this.totalCart = totalCart

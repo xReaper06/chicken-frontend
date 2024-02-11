@@ -85,6 +85,7 @@ const addToCart = async()=>{
             alert(response.data.msg);
             getMyProductCart();
             closeModal();
+            quantity.value = 1
         }
     } catch (error) {
         console.log(error);
